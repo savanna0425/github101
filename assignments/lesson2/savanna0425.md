@@ -78,14 +78,7 @@ cat ~/.ssh/id_ed25519.pub
 
 ## 3. 版本信息截图
 
-由于当前环境限制，无法直接插入截图，但可以通过以下命令查看版本信息：
-
-```bash
-$ git --version
-git version 2.39.5 (Apple Git-154)
-```
-
-**说明**：在实际提交时，请通过截图工具（如macOS的截图快捷键 Command+Shift+4）截取终端显示结果，并插入到本文档中。
+见gitversion.png
 
 ## 4. Git命令使用过程总结
 
@@ -264,20 +257,66 @@ git push -u origin main
 1. **安装验证**：执行 `git --version` 确认Git已安装（版本2.39.5）
 2. **创建作业文件**：在 `assignments/lesson2/` 目录下创建 `savanna0425.md`
 3. **编写报告**：完成Git安装过程、问题解决、命令使用等内容的撰写
-4. **准备提交**：文件已创建，等待执行git命令提交
+4. **初始化Git仓库**：由于本地目录不是git仓库，执行 `git init` 初始化
+5. **配置远程仓库**：执行 `git remote add origin https://github.com/savanna0425/github101.git`
+6. **配置用户信息**：执行 `git config user.name "savanna0425"` 和 `git config user.email`
+7. **添加文件**：执行 `git add .` 添加所有文件到暂存区
+8. **提交更改**：执行 `git commit -m "完成第一课和第二课作业：开源商业模式分析报告和Git工具实践报告"`
+9. **合并远程更改**：执行 `git pull origin main --allow-unrelated-histories --no-rebase` 合并远程仓库内容
+10. **推送到远程**：执行 `git push origin main` 成功推送到远程仓库
+
+#### 实际执行的Git命令记录
+
+```bash
+# 1. 初始化Git仓库
+git init
+
+# 2. 添加远程仓库
+git remote add origin https://github.com/savanna0425/github101.git
+
+# 3. 配置用户信息
+git config user.name "savanna0425"
+git config user.email "savanna0425@users.noreply.github.com"
+
+# 4. 查看仓库状态
+git status
+
+# 5. 添加所有文件到暂存区
+git add .
+
+# 6. 提交更改
+git commit -m "完成第一课和第二课作业：开源商业模式分析报告和Git工具实践报告"
+
+# 7. 查看提交历史
+git log --oneline
+# 输出：c62806e 完成第一课和第二课作业：开源商业模式分析报告和Git工具实践报告
+
+# 8. 拉取并合并远程仓库内容
+git pull origin main --allow-unrelated-histories --no-rebase
+
+# 9. 推送到远程仓库
+git push origin main
+# 输出：To https://github.com/savanna0425/github101.git
+#       17b6cdd..a425c9a  main -> main
+```
+
+#### 遇到的问题及解决
+
+**问题1：推送被拒绝**
+- **错误信息**：`! [rejected] main -> main (fetch first)`
+- **原因**：远程仓库已有内容，本地仓库是新建的，历史不相关
+- **解决方法**：使用 `git pull origin main --allow-unrelated-histories --no-rebase` 合并远程内容
+
+**问题2：需要指定合并策略**
+- **错误信息**：`fatal: Need to specify how to reconcile divergent branches.`
+- **解决方法**：使用 `--no-rebase` 参数指定使用merge策略
 
 #### 下一步操作
-1. 如果仓库还未初始化，需要先执行 `git init` 或克隆Fork的仓库
-2. 执行 `git add assignments/lesson2/savanna0425.md`
-3. 执行 `git commit -m "完成第二课作业：Git工具实践报告"`
-4. 执行 `git push origin main` 推送到远程仓库
-5. 在GitHub上创建Pull Request
+1. ✅ 初始化Git仓库 - 已完成
+2. ✅ 添加文件到暂存区 - 已完成
+3. ✅ 提交到本地仓库 - 已完成
+4. ✅ 推送到远程仓库 - 已完成
+5. **创建Pull Request**：在GitHub上向原始仓库（upstreamlabs/github101）提交PR
 
 ---
-
-## CI 自动评分与运行指引
-- 课程作业检测仅在 PR 到 main 时执行，请通过 Pull Request 提交本文件。
-- 文件命名：assignments/lesson2/{你的GitHub用户名}.md。
-- 自动评分工作流： [.github/workflows/calculate-score.yml](../../.github/workflows/calculate-score.yml)。
-- 首次 Fork 后：进入 Actions → 选择 "Calculate Student Score" → 点击 "Run workflow" 并选择 main → 在日志中查看成绩。
 
